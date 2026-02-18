@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Project 1 Report Out | Drill Drift</title>
+    <style>
+        :root {
+            --bg: #0b0f14;
+            --card: #111826;
+            --card2: #0f1622;
+            --text: #e7eefc;
+            --muted: #a9b7d3;
+            --line: rgba(231, 238, 252, .12);
+            --accent: #67e8f9;
+            --accent2: #a78bfa;
+            --good: #34d399;
+            --warn: #fbbf24;
+            --bad: #fb7185;
+
+            --radius: 18px;
+            --shadow: 0 18px 50px rgba(0, 0, 0, .35);
+            --max: 1100px;
+            --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--sans);
+            color: var(--text);
+            background:
+                radial-gradient(1100px 700px at 20% -10%, rgba(103, 232, 249, .18), transparent 60%),
+                radial-gradient(900px 600px at 90% 0%, rgba(167, 139, 250, .16), transparent 55%),
+                radial-gradient(800px 600px at 30% 110%, rgba(52, 211, 153, .12), transparent 55%),
+                var(--bg);
+            line-height: 1.55;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        .wrap {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 28px 18px 70px
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            background: linear-gradient(to bottom, rgba(11, 15, 20, .92), rgba(11, 15, 20, .55));
+            border-bottom: 1px solid var(--line);
+        }
+
+        .topbar {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 14px 18px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .brand {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(103, 232, 249, .9), rgba(167, 139, 250, .85));
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .35);
+            display: grid;
+            place-items: center;
+            color: #0b0f14;
+            font-weight: 900;
+        }
+
+        .brand h1 {
+            font-size: 16px;
+            margin: 0
+        }
+
+        .brand p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end
+        }
+
+        nav a {
+            font-size: 12px;
+            color: var(--muted);
+            padding: 7px 10px;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .03);
+        }
+
+        nav a:hover {
+            color: var(--text);
+            border-color: var(--line)
+        }
+
+        .hero {
+            padding: 26px 0 18px
+        }
+
+        .hero-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: 1.2fr .8fr;
+        }
+
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr
+            }
+
+            nav {
+                display: none
+            }
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .02));
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 18px;
+        }
+
+        .title {
+            font-size: 34px;
+            margin: 0 0 8px;
+            letter-spacing: -.02em;
+        }
+
+        .subtitle {
+            margin: 0;
+            color: var(--muted)
+        }
+
+        .chips {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+
+        .chip {
+            font-size: 12px;
+            color: var(--text);
+            padding: 7px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, .03);
+        }
+
+        .chip strong {
+            font-family: var(--mono);
+            font-weight: 700;
+            color: var(--accent)
+        }
+
+        .meta {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 1fr 1fr;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 520px) {
+            .meta {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .meta .row {
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: rgba(0, 0, 0, .15);
+        }
+
+        .label {
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .08em
+        }
+
+        .value {
+            margin-top: 4px;
+            font-weight: 600
+        }
+
+        .value code {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--accent)
+        }
+
+        main {
+            display: grid;
+            gap: 16px
+        }
+
+        section {
+            scroll-margin-top: 90px
+        }
+
+        .section-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .section-head h2 {
+            margin: 0;
+            font-size: 18px
+        }
+
+        .hint {
+            margin: 0;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .grid2 {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: 1fr 1fr
+        }
+
+        @media (max-width: 900px) {
+            .grid2 {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .list {
+            margin: 10px 0 0;
+            padding-left: 18px;
+            color: var(--text)
+        }
+
+        .list li {
+            margin: 6px 0
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .callout {
+            border: 1px solid var(--line);
+            background: rgba(103, 232, 249, .08);
+            border-radius: 16px;
+            padding: 12px 14px;
+        }
+
+        .callout h3 {
+            margin: 0 0 6px;
+            font-size: 14px
+        }
+
+        .callout p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .ctq {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .ctq .tag {
+            font-family: var(--mono);
+            font-size: 12px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            border: 1px dashed rgba(103, 232, 249, .45);
+            background: rgba(103, 232, 249, .07);
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        .gallery {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media (max-width: 520px) {
+            .gallery {
+                grid-template-columns: 1fr
+            }
+        }
+
+        figure {
+            margin: 0;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .03);
+            overflow: hidden;
+        }
+
+        figure img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            background: rgba(255, 255, 255, .03);
+        }
+
+        figcaption {
+            padding: 10px 10px 12px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .02);
+        }
+
+        th,
+        td {
+            padding: 10px 10px;
+            border-bottom: 1px solid var(--line);
+            font-size: 13px;
+            vertical-align: top;
+        }
+
+        th {
+            text-align: left;
+            color: var(--muted);
+            font-weight: 600;
+            background: rgba(0, 0, 0, .18);
+            position: sticky;
+            top: 0;
+        }
+
+        tr:last-child td {
+            border-bottom: none
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            font-size: 12px;
+            font-weight: 700;
+            background: rgba(255, 255, 255, .03);
+        }
+
+        .pass {
+            color: var(--good)
+        }
+
+        .warn {
+            color: var(--warn)
+        }
+
+        .fail {
+            color: var(--bad)
+        }
+
+        .footer {
+            margin-top: 12px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .kpi {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 12px;
+        }
+
+        @media (max-width: 900px) {
+            .kpi {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .kpi .box {
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 12px 14px;
+            background: rgba(0, 0, 0, .14);
+        }
+
+        .kpi .big {
+            font-size: 18px;
+            font-weight: 800
+        }
+
+        .kpi .small {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .btnrow {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px
+        }
+
+        button {
+            cursor: pointer;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, .04);
+            color: var(--text);
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        button:hover {
+            border-color: rgba(103, 232, 249, .45)
+        }
+
+        .print-note {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 8px 0 0
+        }
+
+        @media print {
+            header {
+                position: static;
+                backdrop-filter: none
+            }
+
+            nav {
+                display: none
+            }
+
+            .wrap {
+                padding: 0
+            }
+
+            body {
+                background: #fff;
+                color: #111
+            }
+
+            .card,
+            table,
+            figure,
+            .meta .row,
+            .callout,
+            .kpi .box {
+                box-shadow: none;
+                border-color: #ddd;
+                background: #fff
+            }
+
+            a {
+                color: #111;
+                text-decoration: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="topbar">
+            <div class="brand">
+                <div class="badge">DD</div>
+                <div>
+                    <h1>Project 1 Report Out</h1>
+                    <p>Drill Drift | Single-page portfolio report</p>
+                </div>
+            </div>
+            <nav aria-label="Section navigation">
+                <a href="#objective">Objective</a>
+                <a href="#drawings">Drawing/Specs</a>
+                <a href="#materials">Materials</a>
+                <a href="#process">Process Plan</a>
+                <a href="#tooling">Tooling</a>
+                <a href="#qc">In-Process QC</a>
+                <a href="#photos">Finished Photos</a>
+                <a href="#inspection">Final Inspection</a>
+                <a href="#problems">Problems/Solutions</a>
+                <a href="#lessons">Lessons</a>
+                <a href="#safety">Safety</a>
+                <a href="#skills">Skills</a>
+                <a href="#improvements">Improvements</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="wrap">
+        <div class="hero">
+            <div class="hero-grid">
+                <div class="card">
+                    <h2 class="title">Drill Drift</h2>
+                    <p class="subtitle">
+                        A quick, readable report of what I made, how I made it, how I checked it, and what I’d improve
+                        next time.
+                    </p>
+
+                    <div class="chips">
+                        <div class="chip"><strong>CTQ</strong> = critical-to-quality features highlighted below</div>
+                        <div class="chip"><strong>QC</strong> moments are called out during the process</div>
+                        <div class="chip"><strong>Pass/Fail</strong> summarized in the inspection table</div>
+                    </div>
+
+                    <div class="btnrow">
+                        <button onclick="window.print()">Print / Save as PDF</button>
+                        <button onclick="document.querySelector('#inspection').scrollIntoView({behavior:'smooth'})">
+                            Jump to Final Inspection
+                        </button>
+                    </div>
+                    <p class="print-note">Tip: In your browser, use Print → “Save as PDF” for an easy submission file.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="section-head">
+                        <h2>Project Header</h2>
+                        <p class="hint">Quick context for a reviewer or recruiter</p>
+                    </div>
+
+                    <div class="meta">
+                        <div class="row">
+                            <div class="label">Student</div>
+                            <div class="value">Hai Truong</div>
+                        </div>
+                        <div class="row">
+                            <div class="label">Course + Semester</div>
+                            <div class="value">ENGTC 165 | Spring 2026</div>
+                        </div>
+                        <div class="row" style="grid-column: 1 / -1;">
+                            <div class="label">Machines Used</div>
+                            <div class="value">Vise, Dividers, DyChem, Hammer, File, Drill Press with 82 counter sink
+                                and 1/4"
+                                drill bit, Hacksaw, Scribe, and Center Punch </div>
+                        </div>
+                    </div>
+
+                    <div class="kpi">
+                        <div class="box">
+                            <div class="big">Material</div>
+                            <div class="small">1/4" x 3/4" mild steel</div>
+                        </div>
+                        <div class="box">
+                            <div class="big">Finish Goal</div>
+                            <div class="small">Deburred + smooth chamfers</div>
+                        </div>
+                        <div class="box">
+                            <div class="big">Fit Goal</div>
+                            <div class="small">Drift taper seats cleanly</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <!-- Objective -->
+            <section id="objective" class="card">
+                <div class="section-head">
+                    <h2>Project Objective</h2>
+                    <p class="hint">Part function, skills, and theory demonstrated</p>
+                </div>
+                <div class="grid2">
+                    <div>
+                        <h3 style="margin:0 0 8px; font-size:14px;">What this part does</h3>
+                        <p class="muted" style="margin:0">
+                            The drill drift is used to remove tapered shank tools (like a Morse taper drill) from a
+                            spindle or sleeve
+                            by delivering a controlled wedge action and transferring force safely.
+                        </p>
+                        <ul class="list">
+                            <li><strong>Function:</strong> Eject tapered tool from taper socket</li>
+                            <li><strong>Performance target:</strong> Strong, straight, no burrs on striking/wedge
+                                surfaces</li>
+                            <li><strong>Constraints:</strong> Must fit the taper slot and withstand impact</li>
+                        </ul>
+                    </div>
+                    <div class="callout">
+                        <h3>Skills + Theory in play</h3>
+                        <p>
+                            Replace this with what you actually demonstrated:
+                            reading prints, tolerance thinking, tool selection, feeds/speeds estimation, and
+                            inspection
+                            strategy.
+                        </p>
+                        <div class="ctq">
+                            <span class="tag">CTQ: Wedge thickness</span>
+                            <span class="tag">CTQ: Edge chamfer</span>
+                            <span class="tag">CTQ: Overall length</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Drawings & Specs -->
+            <section id="drawings" class="card">
+                <div class="section-head">
+                    <h2>Drawing & Specifications</h2>
+                    <p class="hint">Insert snapshots and highlight CTQs + tolerances</p>
+                </div>
+
+                <div class="grid2">
+                    <div>
+                        <div class="callout">
+                            <h3>CTQ highlights</h3>
+                            <p>
+                                Mark the dimensions that matter most for function. Add your actual callouts below.
+                            </p>
+                            <div class="ctq">
+                                <span class="tag">CTQ: Thickness = ____ ± ____</span>
+                                <span class="tag">CTQ: Wedge angle = ____° ± ____°</span>
+                                <span class="tag">CTQ: Slot fit width = ____ ± ____</span>
+                            </div>
+                        </div>
+                        <ul class="list">
+                            <li><strong>Tolerances applied:</strong> e.g., ±0.005", ±0.010" (or metric)</li>
+                            <li><strong>Datums / references:</strong> e.g., face A, long edge B</li>
+                            <li><strong>Surface finish notes:</strong> e.g., deburr all edges</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <div class="gallery">
+                            <figure>
+                                <img src="images/drawing-1.png" alt="Drawing snapshot 1 (replace image)" />
+                                <figcaption>Drawing snapshot 1: overall dimensions + notes</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="images/drawing-ctq.png" alt="CTQ highlighted drawing (replace image)" />
+                                <figcaption>CTQ highlight: mark critical features in a bright color</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="images/sketch-op-seq.png"
+                                    alt="Process sketch or op sequence (replace image)" />
+                                <figcaption>Optional: op-sequence sketch or setup diagram</figcaption>
+                            </figure>
+                        </div>
+                        <p class="muted" style="margin:10px 0 0; font-size:12px;">
+                            Put your images in an <code>images/</code> folder next to this file, or replace the
+                            <code>src</code> paths.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Materials -->
+            <section id="materials" class="card">
+                <div class="section-head">
+                    <h2>Materials Used</h2>
+                    <p class="hint">Material type, raw stock size, and why</p>
+                </div>
+                <div class="grid2">
+                    <div>
+                        <ul class="list">
+                            <li><strong>Material:</strong> e.g., 1045 steel / 12L14 / 6061-T6</li>
+                            <li><strong>Raw stock size:</strong> e.g., 1/8" x 1" flat bar (or metric)</li>
+                            <li><strong>Why this material:</strong> strength under impact, machinability,
+                                availability
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="callout">
+                        <h3>Material reasoning (make it employer-friendly)</h3>
+                        <p>
+                            Example: “Chose mild steel for toughness and impact resistance. Stock size minimized
+                            time on
+                            roughing operations and reduced waste.”
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Process Planning -->
+            <section id="process" class="card">
+                <div class="section-head">
+                    <h2>Process Planning</h2>
+                    <p class="hint">Operation sequence + setup strategy (the good stuff)</p>
+                </div>
+
+                <div class="grid2">
+                    <div>
+                        <h3 style="margin:0 0 8px; font-size:14px;">Operation sequence (example)</h3>
+                        <ol class="list">
+                            <li>Cut stock to rough length (+ allowance)</li>
+                            <li>Face / square reference edge(s)</li>
+                            <li>Mill/shape wedge taper surface</li>
+                            <li>Deburr and break edges</li>
+                            <li>Verify CTQs (thickness, wedge angle, length)</li>
+                        </ol>
+                    </div>
+                    <div class="callout">
+                        <h3>Setup strategy</h3>
+                        <p>
+                            Describe how you located the part, controlled repeatability, and stayed rigid.
+                            Mention vise parallels, stops, clamps, datum edges, or how you minimized re-clamping.
+                        </p>
+                        <ul class="list">
+                            <li><strong>Workholding:</strong> vise + parallels / clamps / fixture</li>
+                            <li><strong>Datum:</strong> first squared face used as reference</li>
+                            <li><strong>Rigidity:</strong> short tool stick-out, stable clamping</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tooling & Speeds/Feeds -->
+            <section id="tooling" class="card">
+                <div class="section-head">
+                    <h2>Tooling & Speeds/Feeds</h2>
+                    <p class="hint">Tools used, coatings, SFM/RPM, feed, coolant</p>
+                </div>
+
+                <div class="grid2">
+                    <div>
+                        <ul class="list">
+                            <li><strong>Cutting tools:</strong> e.g., HSS end mill, carbide end mill, file/deburr
+                                tool
+                            </li>
+                            <li><strong>Tool material/coating:</strong> HSS / Carbide / TiAlN etc.</li>
+                            <li><strong>Speeds/feeds:</strong> calculated or estimated</li>
+                            <li><strong>Coolant:</strong> flood / mist / none (and why)</li>
+                        </ul>
+                    </div>
+                    <div class="callout">
+                        <h3>Quick SFM note (optional)</h3>
+                        <p>
+                            If you used Machinery’s Handbook or shop charts, mention it.
+                            Example: “Estimated 250 SFM for carbide on mild steel, adjusted down due to chatter.”
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- In-process QC -->
+            <section id="qc" class="card">
+                <div class="section-head">
+                    <h2>In-Process Quality Control</h2>
+                    <p class="hint">What you measured, when, and with what</p>
+                </div>
+
+                <div class="grid2">
+                    <div>
+                        <ul class="list">
+                            <li><strong>Measurement tools:</strong> calipers, micrometer, protractor, gauge blocks,
+                                etc.
+                            </li>
+                            <li><strong>QC timing:</strong> after squaring, after wedge cut, before deburr, final
+                                check
+                            </li>
+                            <li><strong>Evidence:</strong> include a photo of measuring a CTQ</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="gallery">
+                            <figure>
+                                <img src="images/qc-1.jpg" alt="QC photo 1 (replace image)" />
+                                <figcaption>QC check: thickness measurement at CTQ location</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="images/qc-2.jpg" alt="QC photo 2 (replace image)" />
+                                <figcaption>QC check: wedge angle verification (tool/setup shown)</figcaption>
+                            </figure>
+                            <figure>
+                                <img src="images/qc-3.jpg" alt="QC photo 3 (replace image)" />
+                                <figcaption>QC check: length/fit check before final deburr</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Finished Photos -->
+            <section id="photos" class="card">
+                <div class="section-head">
+                    <h2>Finished Part Photos</h2>
+                    <p class="hint">Multiple angles, close-ups, part next to measuring tools</p>
+                </div>
+
+                <div class="gallery">
+                    <figure>
+                        <img src="images/part-angle-1.jpg" alt="Finished part photo 1 (replace)" />
+                        <figcaption>Angle 1: overall view</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="images/part-angle-2.jpg" alt="Finished part photo 2 (replace)" />
+                        <figcaption>Angle 2: wedge surface close-up</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="images/part-ctq-close.jpg" alt="Finished part CTQ close-up (replace)" />
+                        <figcaption>Close-up: CTQ feature with scale/measurement tool</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <!-- Final Inspection -->
+            <section id="inspection" class="card">
+                <div class="section-head">
+                    <h2>Final Inspection Results</h2>
+                    <p class="hint">Key measurements + pass/fail summary</p>
+                </div>
+
+                <div class="grid2">
+                    <div>
+                        <table aria-label="Final inspection table">
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Spec</th>
+                                    <th>Actual</th>
+                                    <th>Status</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>CTQ: Thickness</strong></td>
+                                    <td>____ ± ____</td>
+                                    <td>____</td>
+                                    <td><span class="status pass">PASS</span></td>
+                                    <td class="muted">Measured at ___ location(s)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CTQ: Wedge Angle</strong></td>
+                                    <td>____° ± ____°</td>
+                                    <td>____°</td>
+                                    <td><span class="status warn">CHECK</span></td>
+                                    <td class="muted">Close to limit, explain why</td>
+                                </tr>
+                                <tr>
+                                    <td>Overall Length</td>
+                                    <td>____ ± ____</td>
+                                    <td>____</td>
+                                    <td><span class="status pass">PASS</span></td>
+                                    <td class="muted">—</td>
+                                </tr>
+                                <tr>
+                                    <td>Edge Break / Deburr</td>
+                                    <td>No sharp edges</td>
+                                    <td>OK</td>
+                                    <td><span class="status pass">PASS</span></td>
+                                    <td class="muted">Visual + touch check</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p class="muted" style="margin:10px 0 0; font-size:12px;">
+                            Use <span class="status pass">PASS</span>, <span class="status warn">CHECK</span>, or
+                            <span class="status fail">FAIL</span>
+                            to keep it easy to scan.
+                        </p>
+                    </div>
+
+                    <div class="callout">
+                        <h3>Pass/Fail Summary</h3>
+                        <p class="muted" style="margin:0 0 8px;">
+                            One paragraph summary that shows maturity:
+                        </p>
+                        <ul class="list">
+                            <li><strong>Overall:</strong> Pass (or note exceptions)</li>
+                            <li><strong>Tightest tolerance challenge:</strong> ______</li>
+                            <li><strong>What I did to control it:</strong> ______</li>
+                            <li><strong>What I’d change next time:</strong> ______</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Problems & Solutions -->
+            <section id="problems" class="card">
+                <div class="section-head">
+                    <h2>Problems & Solutions</h2>
+                    <p class="hint">What went wrong, why, and what changed</p>
+                </div>
+
+                <div class="grid2">
+                    <div>
+                        <h3 style="margin:0 0 8px; font-size:14px;">What went wrong</h3>
+                        <ul class="list">
+                            <li>Example: Wedge angle drifted due to vise shift</li>
+                            <li>Example: Burr formed on edge after aggressive pass</li>
+                            <li>Example: Dimension overshot due to measuring late</li>
+                        </ul>
+                    </div>
+                    <div class="callout">
+                        <h3>Fix + prevention</h3>
+                        <ul class="list">
+                            <li><strong>Root cause:</strong> ______</li>
+                            <li><strong>Change made:</strong> ______</li>
+                            <li><strong>Proof it worked:</strong> re-measured CTQ and verified stability</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lessons Learned -->
+            <section id="lessons" class="card">
+                <div class="section-head">
+                    <h2>Lessons Learned</h2>
+                    <p class="hint">Show reflection: tool wear, sequence, rigidity, measurement timing</p>
+                </div>
+
+                <ul class="list">
+                    <li><strong>Tool wear:</strong> ______ (how it showed up, what you’d watch for)</li>
+                    <li><strong>Order of operations:</strong> ______ (what you’d do earlier/later)</li>
+                    <li><strong>Setup rigidity:</strong> ______ (how you improved stability)</li>
+                    <li><strong>Inspection habits:</strong> ______ (what you’ll measure sooner next time)</li>
+                </ul>
+            </section>
+
+            <!-- Safety -->
+            <section id="safety" class="card">
+                <div class="section-head">
+                    <h2>Safety Considerations</h2>
+                    <p class="hint">PPE, procedures, and any near-miss lessons</p>
+                </div>
+
+                <div class="grid2">
+                    <div>
+                        <ul class="list">
+                            <li><strong>PPE:</strong> safety glasses, face shield (if needed), hearing protection
+                            </li>
+                            <li><strong>Procedures:</strong> chip clearing with brush, no gloves near rotating
+                                spindles
+                            </li>
+                            <li><strong>Work area:</strong> clean, no clutter, tools returned</li>
+                        </ul>
+                    </div>
+                    <div class="callout">
+                        <h3>Near-miss or “watch out for this”</h3>
+                        <p>
+                            If you had a near-miss, describe it briefly and what you changed.
+                            If not, include a real hazard you actively prevented.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills -->
+            <section id="skills" class="card">
+                <div class="section-head">
+                    <h2>Skills Demonstrated</h2>
+                    <p class="hint">A clean bulleted list that recruiters can skim</p>
+                </div>
+
+                <div class="grid2">
+                    <ul class="list">
+                        <li>Blueprint reading + tolerance awareness</li>
+                        <li>Manual machining fundamentals</li>
+                        <li>Process planning and setup strategy</li>
+                        <li>Measurement and inspection discipline</li>
+                        <li>Deburring and edge finishing</li>
+                    </ul>
+                    <div class="callout">
+                        <h3>Optional: add one “power skill”</h3>
+                        <p>
+                            Example: “Troubleshooting chatter by adjusting setup rigidity and cut parameters.”
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Improvements -->
+            <section id="improvements" class="card">
+                <div class="section-head">
+                    <h2>Improvements / Next Revision</h2>
+                    <p class="hint">Continuous improvement mindset</p>
+                </div>
+
+                <div class="grid2">
+                    <div>
+                        <ul class="list">
+                            <li><strong>Tighter tolerances:</strong> ______ (only where function needs it)</li>
+                            <li><strong>Better finish:</strong> ______ (finer pass, polish, different tool)</li>
+                            <li><strong>Faster cycle time:</strong> ______ (reduce setups, smarter sequence)</li>
+                            <li><strong>CNC version:</strong> ______ (if applicable: end mill path, fixture idea)
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="callout">
+                        <h3>“If I had one more hour…”</h3>
+                        <p>
+                            Add one concise improvement that’s realistic and shows good judgment.
+                            That line often hits hard in interviews.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <p class="footer">
+                Built for clarity + portfolio vibes. Swap placeholders with your real numbers, photos, and notes.
+            </p>
+        </main>
+    </div>
+
+    <script>
+        // Tiny UX: highlight active section in the nav while scrolling (desktop only).
+        const links = [...document.querySelectorAll('nav a')];
+        const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+        const obs = new IntersectionObserver((entries) => {
+            const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+            if (!visible) return;
+            links.forEach(a => a.style.borderColor = 'transparent');
+            const active = links.find(a => a.getAttribute('href') === '#' + visible.target.id);
+            if (active) { active.style.borderColor = 'rgba(103,232,249,.45)'; }
+        }, { rootMargin: '-40% 0px -55% 0px', threshold: [0.1, 0.2, 0.3] });
+
+        sections.forEach(s => obs.observe(s));
+    </script>
+</body>
+
+</html>
